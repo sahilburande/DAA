@@ -1,0 +1,49 @@
+#include <stdio.h>
+
+// Function to read array elements
+void read1(int arr[], int n) {
+    printf("Enter %d elements : ", n);
+    for (int i = 0; i < n; i++) {
+        scanf("%d", &arr[i]);
+    }
+}
+
+// Bubble sort implementation
+void bubbleSort(int arr[], int n) {
+    int temp;
+    for (int i = 0; i < n - 1; i++) {
+        for (int j = 0; j < n - 1 - i; j++) {
+            if (arr[j] > arr[j + 1]) {
+                // Swap arr[j] and arr[j+1]
+                temp = arr[j];
+                arr[j] = arr[j + 1];
+                arr[j + 1] = temp;
+            }
+        }
+    }
+}
+
+// Display array elements
+void display(int arr[], int n) {
+    for (int i = 0; i < n; i++) {
+        printf("%d ", arr[i]);
+    }
+    printf("\n");
+}
+
+// Recursive binary search function
+int binarySearch(int arr[], int low, int high, int key) {
+    if (low > high) {
+        return -1;  // Key not found
+    }
+
+    int mid = (low + high) / 2;
+
+    if (arr[mid] == key) {
+        return mid;  // Key found at position mid
+    } else if (key < arr[mid]) {
+        return binarySearch(arr, low, mid - 1, key);
+    } else {
+        return binarySearch(arr, mid + 1, high, key);
+    }
+}
