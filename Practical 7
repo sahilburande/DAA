@@ -1,0 +1,66 @@
+void printPath(int parent[], int j) {
+	int path[MAX];
+	int pathIndex = 0;
+
+	while (j != -1) {
+		path[pathIndex++] = j;
+		j = parent[j];
+	}
+
+	for (int i = 0; i < pathIndex; i++) {
+		printf("%d", path[i]);
+		if (i < pathIndex - 1) {
+			printf("<-");
+		}
+	}
+}
+
+
+
+
+int distance[MAX];
+	int visited[MAX] = {0};
+	int parent[MAX];
+
+	for (int i = 1; i <= n; i++) {
+		distance[i] = INFINITY;
+		parent[i] = -1;
+	}
+	distance[startnode] = 0;
+
+	for (int count = 1; count <= n - 1; count++) {
+		int min = INFINITY, u = -1;
+		for (int i = 1; i <= n; i++) {
+			if (!visited[i] && distance[i] <= min) {
+				min = distance[i];
+				u = i;
+			}
+		}
+
+		if (u == -1) break;
+
+		visited[u] = 1;
+
+		for (int v = 1; v <= n; v++) {
+			if (!visited[v] && G[u][v] != 0 && distance[u] != INFINITY &&
+				distance[u] + G[u][v] < distance[v]) {
+				distance[v] = distance[u] + G[u][v];
+				parent[v] = u;
+			}
+		}
+	}
+
+	printf("Node\tDistance\tPath\n");
+	for (int i = 1; i <= n; i++) {
+		if (i == startnode) continue;
+
+		printf("   %d\t", i);
+		if (distance[i] == INFINITY) {
+			printf("     INF\tNO PATH\n");
+		} else {
+			printf("       %d\t", distance[i]);
+			printPath(parent, i);
+			printf("\n");
+		}
+	}
+
